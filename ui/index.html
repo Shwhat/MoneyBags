@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoneyBags</title>
+<link rel="icon" href="/logo.svg">
+<style>/*CSS*/</style>
+</head>
+<body>
+<div id="app">
+  <div id="menubar">
+    <div class="menu" data-menu="file">File</div>
+    <div class="menu" data-menu="edit">Edit</div>
+    <div class="menu" data-menu="insert">Insert</div>
+    <div class="menu" data-menu="view">View</div>
+    <div class="menu" data-menu="help">Help</div>
+    <div id="docname"></div>
+  </div>
+  <div id="toolbar"></div>
+  <div id="main">
+    <div id="dock-left" class="dock hidden"></div>
+    <div id="dockmid">
+      <section id="center">
+        <div id="viewhead"></div>
+        <div id="workwrap"><div id="work" tabindex="-1"></div></div>
+      </section>
+      <div id="dock-bottom" class="dock hidden"></div>
+    </div>
+    <div id="dock-right" class="dock hidden"></div>
+  </div>
+  <div id="cmdbar" class="hidden"><span id="cmdprompt">Command:</span><input id="cmdinput" autocomplete="off" spellcheck="false" list="cmdlist"><datalist id="cmdlist"></datalist></div>
+  <div id="status">
+    <span id="st-view"></span>
+    <span id="st-sel"></span>
+    <span id="st-total"></span>
+    <span id="st-bal"></span>
+    <span id="st-save"></span>
+    <span id="st-msg"></span>
+  </div>
+</div>
+<div id="dockfloat"></div>
+<div id="dockhint" class="hidden"></div>
+<div id="dockstore" class="hidden">
+  <div class="tabbody" id="tab-years"></div>
+  <div class="tabbody" id="tab-todo"></div>
+  <div class="tabbody" id="tab-balance"></div>
+  <div id="props"></div>
+</div>
+<div id="dropdown" class="hidden"></div>
+<div id="tip" class="hidden"></div>
+<dialog id="dlg"><form method="dialog" id="dlgform"><div class="dlghead" id="dlgtitle"></div><div id="dlgbody"></div><div class="dlgbtns" id="dlgbtns"></div></form></dialog>
+<script>/*JS*/</script>
+</body>
+</html>

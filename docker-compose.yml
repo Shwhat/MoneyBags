@@ -1,0 +1,24 @@
+# MoneyBags stack. Works as a Dockhand Git stack (compose path: docker-compose.yml) and from the command line.
+# Every setting has a default here; set your own values in Dockhand's stack environment variables or in .env.
+name: moneybags
+
+services:
+  app:
+    image: ghcr.io/shwhat/moneybags:latest
+    container_name: moneybags
+    restart: unless-stopped
+    ports:
+      - "${MONEYBAGS_PORT:-8417}:8080"
+    environment:
+      TZ: ${TZ:-America/Los_Angeles}
+      MONEYBAGS_SIGNUP: ${MONEYBAGS_SIGNUP:-on}
+      MONEYBAGS_MAX_USERS: ${MONEYBAGS_MAX_USERS:-2}
+      MONEYBAGS_SECURE_COOKIE: ${MONEYBAGS_SECURE_COOKIE:-auto}
+    volumes:
+      - ${MONEYBAGS_DATA_DIR:-/opt/moneybags/data}:/data
+    healthcheck:
+      test: ["CMD", "/moneybags", "-healthcheck"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3

@@ -1,0 +1,21 @@
+# Script load order. The server and the tests both inline these into index.html in this order, after the About pages.
+# files.js must stay last: it starts the application.
+js/core.js
+js/model.js
+js/state.js
+js/theme.js
+js/host.js
+js/dialogs.js
+js/xlsx.js
+js/ribbon.js
+js/dock.js
+js/menus.js
+js/views.js
+js/edit.js
+js/summary.js
+js/charts.js
+js/about.js
+js/importxl.js
+js/exports.js
+js/demo.js
+js/files.js
