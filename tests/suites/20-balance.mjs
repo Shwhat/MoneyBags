@@ -33,8 +33,8 @@ export const tests = {
     await t.open({ today: '2025-11-30' }); await t.eval(book);
     await t.eval(() => { VIEW.year = 2025; VIEW.month = 0; setView('summary'); });
     const rows = await t.eval(() => [...document.querySelectorAll('#sumtable tbody tr')].map(r => [...r.children].map(c => c.textContent.trim())));
-    t.eq(rows[9], ['October', '$2,625.69', '$2,041.14', '$584.55', '-', '-', '$1,312.85', '$1,312.85', '-', 'Alex owes $728.29', 'Alex owes $728.29']);
-    t.eq(rows[10], ['November', '$100.00', '$100.00', '-', '-', '$280.00', '$370.00', '$50.00', '$700.00', 'Devon owes $930.00', 'Devon owes $201.71']);
+    t.eq(rows[9], ['October', '$2,625.69', '$2,041.14', '$584.55', '-', '-', '-', '-', '$1,312.85', '$1,312.85', '-', 'Alex owes $728.29', 'Alex owes $728.29']);
+    t.eq(rows[10], ['November', '$100.00', '$100.00', '-', '-', '$280.00', '-', '-', '$370.00', '$50.00', '$700.00', 'Devon owes $930.00', 'Devon owes $201.71']);
     t.eq(rows[12][0], '2025'); t.eq(rows[12][1], '$2,735.69');
     t.ok((await t.text('#work')).includes('Carried in from 2024: All square'));
     t.ok((await t.text('#work')).includes('has no split set yet'), 'notes unsplit spending');
@@ -59,11 +59,26 @@ export const tests = {
   },
   async 'P key opens the settle-up dialog and checks the amount'(t) {
     await t.open({ today: '2025-11-30' }); await t.eval(book); await t.eval(() => document.activeElement.blur());
-    await t.key('p'); await t.page.waitForTimeout(50); t.ok(await t.eval(() => $('#dlg').open));
-    await t.type('#f-amount', 'abc'); await t.confirm(); await t.page.waitForTimeout(50);
-    t.ok(await t.eval(() => $('#dlg').open), 'dialog opens again after a bad amount');
+    await t.key('p'); await t.page.waitForFunction(() => $('#dlg').open);
+    await t.type('#f-amount', 'abc'); await t.click('#dlgbtns .primary'); await t.page.waitForTimeout(100); await t.page.waitForFunction(() => $('#dlg').open);
+    t.eq(await t.eval(() => $('#f-amount').value), 'abc', 'dialog opens again with what was typed');
     await t.type('#f-amount', '10'); await t.confirm();
     t.eq(await t.eval(() => B.payments.length), 2);
+  },
+  async 'personal (P) counts for the payer and never moves the balance'(t) {
+    await t.open({ today: '2025-11-30' }); await t.eval(book);
+    const before = await t.eval(() => balanceNow());
+    await t.eval(() => commit(() => B.expenses.push(newExpenseObj({ date: '2025-11-10', vendor: 'Haircut', amount: 45, cashBack: 5, paidBy: 'p2', split: 'P' }))));
+    t.eq(await t.eval(() => { const e = B.expenses[B.expenses.length - 1]; return [sharesOf(e), owedOf(e), problemsOf(e).length]; }), [{ p1: 0, p2: 40 }, 0, 0]);
+    t.eq(await t.eval(() => balanceNow()), before, 'balance unchanged');
+    t.eq(await t.eval(() => { const s = periodStats({ year: 2025, month: 11 }); return [s.personal.p1, s.personal.p2, r2(s.share.p2), r2(s.joint)]; }), [0, 40, 90, 100.5 - 0.5]);
+    await t.eval(() => { VIEW.year = 2025; VIEW.month = 11; setView('summary'); });
+    const nov = await t.eval(() => [...document.querySelectorAll('#sumtable tbody tr')][10].children[7].textContent);
+    t.eq(nov, '$40.00', "Alex personal column");
+    t.ok((await t.text('#tab-balance')).includes('Alex personal$40.00'));
+    await t.eval(() => setView('expenses')); await t.page.selectOption('#f-split', 'P');
+    t.eq(await t.eval(() => visibleExpenses().map(e => e.vendor)), ['Haircut']);
+    t.ok(await t.eval(() => !!document.querySelector('#exptable .pill.p')), 'P pill shows');
   },
   async 'net text and money formatting'(t) {
     await t.open();

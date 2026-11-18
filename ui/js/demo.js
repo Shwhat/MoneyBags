@@ -21,6 +21,8 @@ function buildDemo() {
   E(-2, 12, "Riley's car insurance", 140, 'p1', 'N', 'Other', { notes: 'Sam paid it for Riley' });
   E(-1, 18, "Sam's phone repair", 89, 'p2', 'N', 'Other');
   E(0, 3, 'Farmers market', 36, 'p2', '', 'Groceries');
+  E(-1, 8, 'Haircut', 45, 'p1', 'P', 'Other', { notes: 'Personal: Sam keeps this cost' });
+  E(-2, 14, 'Running shoes', 120, 'p2', 'P', 'Other');
   E(0, 5, 'Hardware store', 64.2, 'p1', 'Y', 'Household', { check: 'Was this for the shared garden? Check the receipt.' });
   b.recurring.push({ id: 'demopower', name: 'Power', amount: null, paidBy: 'p1', split: 'Y', category: c('Utilities'), day: 1, start: addMonths(`${y}-${pad2(m)}`, -5), end: '', active: true, notes: 'Amount changes every month' });
   b.recurring.push({ id: 'demonet', name: 'Internet', amount: 85, paidBy: 'p2', split: 'Y', category: c('Utilities'), day: 1, start: addMonths(`${y}-${pad2(m)}`, -5), end: '', active: true, notes: '' });

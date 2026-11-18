@@ -3,7 +3,7 @@
 This page lists what MoneyBags does not do in this version.
 
 - Two people per book, and one book per server.
-- Splits are 50/50 (Y) or all for the other person (N). Other shares, such as 60/40, are planned.
+- Splits are 50/50 (Y), all for the other person (N), or all for the payer (P). Other shares, such as 60/40, are planned.
 - One person edits at a time. The other sees the book read-only until the edit lock is free.
 - Undo history lasts until the page is closed or reloaded.
 - Amounts are in dollars. There is no other currency.

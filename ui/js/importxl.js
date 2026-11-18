@@ -1,5 +1,5 @@
 // ---------- import from the old Excel workbooks ----------
-// Reads the "Expenses" sheet of each workbook: Vendor, Amount, Date, Who Paid, Joint Expense (Y/N/H), Amount Saved,
+// Reads the "Expenses" sheet of each workbook: Vendor, Amount, Date, Who Paid, Joint Expense (Y/N/P/H), Amount Saved,
 // Money Back from Credit Card. Rows already in the book are skipped, so importing the same file twice adds nothing.
 const CAT_WORDS = [
   ['Utilities', /\b(power|water|internet|electric|garbage|sewer|utility|utilities|phone bill|pse)\b/i],
@@ -47,7 +47,7 @@ function parseWorkbookRows(rows, fileName) {
     const dRaw = cell('date'); let date = /^\d+(\.\d+)?$/.test(dRaw) ? excelSerialDate(dRaw) : parseDate(dRaw);
     if (!date) notes.push(dRaw ? `Date in the spreadsheet could not be read ("${dRaw}")` : 'The spreadsheet row has no date');
     const w = cell('who'), paidBy = personByLetter(w); if (w && !paidBy) out.letters.add(w);
-    const j = cell('joint').toUpperCase(); let split = j === 'Y' || j === 'N' ? j : '';
+    const j = cell('joint').toUpperCase(); let split = j === 'Y' || j === 'N' || j === 'P' ? j : '';
     if (j === 'H') { split = 'Y'; notes.push('Marked H (house) in the spreadsheet, imported as joint'); }
     else if (j && !split) notes.push(`Joint Expense "${cell('joint')}" could not be read`);
     if (amount == null && date && date > today()) { out.placeholders++; continue; }

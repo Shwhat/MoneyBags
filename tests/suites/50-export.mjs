@@ -6,7 +6,7 @@ export const tests = {
     const run = async which => { const w = t.page.waitForEvent('download'); await t.act('exportCSV'); await t.page.waitForTimeout(50); await t.page.click(`#dlgbtns [data-v="${which}"]`); return w; };
     let d = await run('all'); let txt = require_text(await d.path());
     const lines = txt.replace(/^﻿/, '').trim().split('\r\n');
-    t.eq(lines[0].split(',').slice(0, 11), ['Date', 'Vendor', 'Category', 'Paid by', 'Joint (Y/N)', 'Amount', 'Cash back', 'Amount saved', 'Final total', "Devon's share", "Alex's share"]);
+    t.eq(lines[0].split(',').slice(0, 11), ['Date', 'Vendor', 'Category', 'Paid by', 'Split (Y/N/P)', 'Amount', 'Cash back', 'Amount saved', 'Final total', "Devon's share", "Alex's share"]);
     t.eq(lines.length, 3); t.ok(lines[2].startsWith('2026-11-02,"Safeway, ""big"" shop",Groceries,Devon,Y,50,1,,49,24.5,24.5'), lines[2]);
     t.eq(d.suggestedFilename(), 'moneybags-expenses-all.csv');
     d = await run('shown'); t.eq(d.suggestedFilename(), 'moneybags-expenses-2026-11.csv');
@@ -25,7 +25,8 @@ export const tests = {
     t.eq(r.Expenses.length, 3); t.eq(r.Expenses[1][1], 'Gift');
     t.eq(r.Payments[1], ['2026-11-03', 'Alex', 'Devon', '4.5', 'Payment', 'Zelle']);
     t.eq(r['Summary 2026'][10].slice(0, 2), ['October', '0']);
-    t.eq(r['Summary 2026'][11].slice(9), ['Alex owes Devon $20.00', 'All square']);
+    t.eq(r['Summary 2026'][11].slice(11), ['Alex owes Devon $20.00', 'All square']);
+    t.eq(r['Summary 2026'][0].slice(6, 8), ['Devon personal', 'Alex personal']);
     t.eq(r.Categories[2], ['Groceries', '1', '49']);
   },
   async 'backup downloads and restores, with undo'(t) {

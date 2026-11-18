@@ -14,7 +14,7 @@ export const tests = {
     await t.open({ today: '2026-11-17' });
     await t.withFiles([FIX], 'importExcel');
     const pv = await t.eval(() => [...document.querySelectorAll('#dlgbody table.pv')[0].querySelectorAll('tbody td')].map(c => c.textContent));
-    t.eq(pv, ['expenses-sample.xlsx', '12', '0', '1', '5']);
+    t.eq(pv, ['expenses-sample.xlsx', '13', '0', '1', '5']);
     t.ok((await t.text('#dlgbody')).includes('Who Paid letters that match no one: Z'));
     await t.confirm();
     const got = await t.eval(() => B.expenses.map(e => [e.vendor, e.amount, e.date, e.paidBy, e.split, e.saved, e.cashBack, catName(e.category), e.check]));
@@ -29,6 +29,7 @@ export const tests = {
     t.eq(got[9].slice(0, 2), ['Power Nov', null], 'a past blank amount is imported for review');
     t.eq(got[10].slice(0, 3), ['Water Dec 2099', 100, '2099-12-01'], 'future rows with an amount are kept');
     t.eq(got[11][3], '', 'unknown letter leaves Paid by unset');
+    t.eq(got[12].slice(0, 5).concat([got[12][8]]), ['Haircut', 30, '2025-11-06', 'p2', 'P', ''], 'P imports as personal, with nothing to review');
     t.eq(await t.eval(() => B.expenses.some(e => e.vendor === 'Power Dec 2099')), false, 'blank future row skipped');
     t.eq(await t.eval(() => B.expenses[0].source), 'expenses-sample.xlsx, row 3');
     t.eq(await t.eval(() => PANEL_BADGE.todo), 5);
@@ -38,7 +39,7 @@ export const tests = {
     await t.withFiles([FIX], 'importExcel'); await t.confirm();
     await t.withFiles([FIX], 'importExcel');
     t.ok((await t.text('#dlgbody')).includes('Nothing new to import'));
-    t.eq(await t.eval(() => B.expenses.length), 12);
+    t.eq(await t.eval(() => B.expenses.length), 13);
   },
   async 'a file that is not a workbook is reported'(t) {
     await t.open();

@@ -2,7 +2,7 @@
 /* MoneyBags: shared expense tracker for two people */
 
 // ---------- constants ----------
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.1.0';
 const BOOK_FORMAT = 1;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -17,7 +17,7 @@ const PREFS = { theme: 'light', appVersion: null, ribbon: null, dock: null, work
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const MON3 = MONTHS.map(m => m.slice(0, 3));
 const DEFAULT_CATEGORIES = ['Food', 'Groceries', 'Utilities', 'Travel', 'Household', 'Other'];
-const SPLITS = { Y: 'Joint (split 50/50)', N: 'Paid for the other person' };
+const SPLITS = { Y: 'Joint (split 50/50)', N: 'Paid for the other person', P: 'Personal (nobody owes)' };
 const PAYMENT_KINDS = { payment: 'Payment', credit: 'Credit', adjustment: 'Adjustment' };
 
 // ---------- money ----------
@@ -82,7 +82,7 @@ function ensureBook(b) {
   for (const k of Object.keys(d)) if (b[k] == null) b[k] = d[k];
   if (!Array.isArray(b.people) || b.people.length !== 2) b.people = d.people;
   for (const p of b.people) { p.name = String(p.name || '').trim() || (p.id === 'p1' ? 'Person 1' : 'Person 2'); p.short = String(p.short || p.name[0] || '').trim().slice(0, 3).toUpperCase(); }
-  for (const e of b.expenses) { e.id = e.id || uid(); e.vendor = e.vendor || ''; e.date = e.date || ''; e.split = e.split === 'Y' || e.split === 'N' ? e.split : ''; e.cashBack = e.cashBack ?? null; e.saved = e.saved ?? null; e.category = e.category || ''; e.notes = e.notes || ''; e.check = e.check || ''; }
+  for (const e of b.expenses) { e.id = e.id || uid(); e.vendor = e.vendor || ''; e.date = e.date || ''; e.split = SPLITS[e.split] ? e.split : ''; e.cashBack = e.cashBack ?? null; e.saved = e.saved ?? null; e.category = e.category || ''; e.notes = e.notes || ''; e.check = e.check || ''; }
   for (const p of b.payments) { p.id = p.id || uid(); p.kind = PAYMENT_KINDS[p.kind] ? p.kind : 'payment'; p.notes = p.notes || ''; }
   for (const t of b.recurring) { t.id = t.id || uid(); t.day = Math.max(1, Math.min(28, +t.day || 1)); t.active = t.active !== false; t.end = t.end || ''; t.notes = t.notes || ''; }
   return b;

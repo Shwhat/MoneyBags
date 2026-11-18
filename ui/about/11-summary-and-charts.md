@@ -11,6 +11,7 @@ The Summary view shows the numbers; the Charts view draws them. Both use the per
 | Balance today | The amount and who owes whom |
 | Joint spending | Joint spending in the period, with what each person paid of it |
 | (person)'s share | Each person's share in the period |
+| Personal | Personal (P) spending in the period, with each person's part |
 | Net for the period | The balance effect of the period alone |
 
 ### Month by month
@@ -25,6 +26,8 @@ One row per month of the year on screen, then a total row. "Carried in from" abo
 | (second person) paid | Joint spending the second person paid |
 | (first) for (second) | N expenses the first person paid for the second |
 | (second) for (first) | N expenses the second person paid for the first |
+| (first person) personal | P expenses the first person paid |
+| (second person) personal | P expenses the second person paid |
 | (person)'s share | Each person's share |
 | Settle-up | Payments, credits and adjustments, both directions |
 | Net | Who owes whom for that month alone |

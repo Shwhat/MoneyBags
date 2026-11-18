@@ -59,8 +59,8 @@ export const tests = {
   },
   async 'book settings rename people and refuse matching letters'(t) {
     await t.open();
-    await t.act('bookSettings'); await t.type('#f-bs', 'D'); await t.confirm(); await t.page.waitForTimeout(30);
-    t.ok(await t.eval(() => $('#dlg').open), 'same letters are refused');
+    await t.act('bookSettings'); await t.type('#f-bs', 'D'); await t.click('#dlgbtns .primary'); await t.page.waitForTimeout(100); await t.page.waitForFunction(() => $('#dlg').open);
+    t.eq(await t.eval(() => $('#f-bs').value), 'D', 'same letters are refused and the dialog opens again');
     await t.type('#f-b', 'Alexis'); await t.type('#f-bs', 'X'); await t.confirm();
     t.eq(await t.eval(() => B.people.map(p => p.name + p.short)), ['DevonD', 'AlexisX']);
   },

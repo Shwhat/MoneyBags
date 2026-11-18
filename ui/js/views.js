@@ -36,7 +36,7 @@ function sortHead(key, label, cls = '') {
 }
 const optHTML = (opts, v) => opts.map(([k, l]) => `<option value="${esc(k)}" ${String(k) === String(v) ? 'selected' : ''}>${esc(l)}</option>`).join('');
 function flagsHTML(e) { const p = problemsOf(e); return p.length ? `<span class="flag" title="${esc(p.map(x => x.text).join('. '))}">Review</span>` : ''; }
-const splitPill = s => s === 'Y' ? '<span class="pill y" title="Joint: split 50/50">Y</span>' : s === 'N' ? '<span class="pill n" title="Paid for the other person">N</span>' : '<span class="pill" title="Not set">?</span>';
+const splitPill = s => s === 'Y' ? '<span class="pill y" title="Joint: split 50/50">Y</span>' : s === 'N' ? '<span class="pill n" title="Paid for the other person">N</span>' : s === 'P' ? '<span class="pill p" title="Personal: nobody owes anything">P</span>' : '<span class="pill" title="Not set">?</span>';
 
 function expensesHTML() {
   syncEntry(ENTRY);
@@ -61,7 +61,7 @@ function expensesHTML() {
       <input class="search" id="f-q" placeholder="Search vendor, notes, amount" value="${esc(FILT.q)}" aria-label="Search">
       <select id="f-cat" aria-label="Category filter">${optHTML([['', 'All categories'], ['-', 'No category']].concat(B.categories.map(c => [c.id, c.name])), FILT.cat)}</select>
       <select id="f-payer" aria-label="Paid by filter">${optHTML([['', 'Anyone paid'], ['p1', a.name + ' paid'], ['p2', b.name + ' paid']], FILT.payer)}</select>
-      <select id="f-split" aria-label="Split filter">${optHTML([['', 'Joint and not joint'], ['Y', 'Joint (Y)'], ['N', 'For the other person (N)'], ['-', 'Split not set']], FILT.split)}</select>
+      <select id="f-split" aria-label="Split filter">${optHTML([['', 'Every split'], ['Y', 'Joint (Y)'], ['N', 'For the other person (N)'], ['P', 'Personal (P)'], ['-', 'Split not set']], FILT.split)}</select>
       <label><input type="checkbox" id="f-review" ${FILT.review ? 'checked' : ''}> Needs review only</label>
       ${filtersActive() ? '<button type="button" class="lnk" data-act="clearFilters">Clear filters</button>' : ''}
       <span class="grow"></span><span class="note" style="margin:0">${l.length} shown</span></div>
@@ -71,7 +71,7 @@ function expensesHTML() {
       <td><input id="en-vendor" value="${esc(ENTRY.vendor)}" placeholder="New expense: vendor" list="vendorlist" aria-label="Vendor"><datalist id="vendorlist">${vendors.map(v => `<option value="${esc(v)}">`).join('')}</datalist></td>
       <td><select id="en-cat" aria-label="Category">${optHTML(catOpts(''), ENTRY.cat)}</select></td>
       <td><select id="en-payer" aria-label="Paid by">${optHTML(personOpts(), ENTRY.payer)}</select></td>
-      <td><select id="en-split" aria-label="Split">${optHTML([['Y', 'Y'], ['N', 'N']], ENTRY.split)}</select></td>
+      <td><select id="en-split" aria-label="Split" title="Y: joint, split 50/50. N: paid for the other person. P: personal, nobody owes">${optHTML([['Y', 'Y'], ['N', 'N'], ['P', 'P']], ENTRY.split)}</select></td>
       <td><input id="en-amount" value="${esc(ENTRY.amount)}" placeholder="0.00" aria-label="Amount" style="text-align:right"></td>
       <td><input id="en-cash" value="${esc(ENTRY.cash)}" placeholder="0.00" aria-label="Cash back" style="text-align:right"></td>
       <td class="hint" colspan="3">Enter adds the expense</td>
@@ -240,6 +240,8 @@ function renderBalance() {
       <span>${esc(b.name)} paid (joint)</span><span>${money(s.jointBy.p2)}</span>
       <span>${esc(a.name)} paid for ${esc(b.name)}</span><span>${money(s.forOther.p1)}</span>
       <span>${esc(b.name)} paid for ${esc(a.name)}</span><span>${money(s.forOther.p2)}</span>
+      <span>${esc(a.name)} personal</span><span>${money(s.personal.p1)}</span>
+      <span>${esc(b.name)} personal</span><span>${money(s.personal.p2)}</span>
       <span>${esc(a.name)}'s share</span><span>${money(s.share.p1)}</span>
       <span>${esc(b.name)}'s share</span><span>${money(s.share.p2)}</span>
       <span>Settle-up entries</span><span>${money(s.paysFrom.p1 + s.paysFrom.p2)}</span>

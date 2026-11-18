@@ -9,7 +9,7 @@ A recurring bill adds one expense each month by itself. This page covers the bil
 | Bill name | Text | Yes | Blank | Becomes the vendor of each expense |
 | Amount | Money or blank | No | Blank | Blank: each expense is added with no amount and listed in the To-do panel until it is entered |
 | Paid by | One of the two people | Yes | The signed-in person | |
-| Split | Y or N | Yes | Y | |
+| Split | Y, N or P | Yes | Y | P suits a bill that belongs to one person, such as a personal phone plan |
 | Category | List | No | No category | |
 | Day of the month | 1 to 28 | Yes | 1 | The date of each expense |
 | First month | Month | Yes | The current month | |

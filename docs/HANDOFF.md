@@ -1,6 +1,6 @@
 # MoneyBags handoff
 
-Version: 1.0.0
+Version: 1.1.0
 Last updated: 2026-11-17
 
 ## Project
@@ -26,7 +26,7 @@ Repository: https://github.com/Shwhat/MoneyBags (branch `main`). Image: `ghcr.io
 | Question | Decision |
 |---|---|
 | Setup | Full OpenSchem stack: Go server, Docker, sign-in for both people |
-| Joint flag | Y (split 50/50) and N (the other person owes it all). H (house) is dropped; imported H rows become Y and are flagged |
+| Joint flag | Y (split 50/50), N (the other person owes it all) and P (personal: the payer keeps it, nobody owes; added in 1.1.0). H (house) is dropped; imported H rows become Y and are flagged. Rows with no flag stay flagged for manual review |
 | Years | Calendar years, January to December; a new year appears on its own |
 | Extras | Import both workbooks, settle-up payments, categories and charts, recurring bills |
 | Updates | Dockhand only (scheduled image updates); no Watchtower |
@@ -67,9 +67,9 @@ Repository: https://github.com/Shwhat/MoneyBags (branch `main`). Image: `ghcr.io
 
 ## Data model
 
-The book (`book.json`): `people` (two, with name and letter), `categories`, `expenses` (date, vendor, amount, cashBack, saved, paidBy, split Y/N/blank, category, notes, check, recurring, source, added, addedBy), `payments` (date, from, to, amount, kind, notes), `recurring` (name, amount or null, paidBy, split, category, day, start, end, active, notes), `recurringLog` (months already added per bill), `setup`, `format`.
+The book (`book.json`): `people` (two, with name and letter), `categories`, `expenses` (date, vendor, amount, cashBack, saved, paidBy, split Y/N/P/blank, category, notes, check, recurring, source, added, addedBy), `payments` (date, from, to, amount, kind, notes), `recurring` (name, amount or null, paidBy, split, category, day, start, end, active, notes), `recurringLog` (months already added per bill), `setup`, `format`.
 
-Balance rule: a joint expense makes the non-payer owe half of the final total; an N expense makes the non-payer owe all of it; each expense's effect is rounded to whole cents (halves away from zero); a settle-up entry lowers what From owes To.
+Balance rule: a joint expense makes the non-payer owe half of the final total; an N expense makes the non-payer owe all of it; a P expense moves nothing and counts fully in the payer's share; each expense's effect is rounded to whole cents (halves away from zero); a settle-up entry lowers what From owes To.
 
 ## Open bugs
 
@@ -95,4 +95,4 @@ See the guide's Limits page (`ui/about/21-limits.md`).
 
 ## Where work stopped
 
-Version 1.0.0 built and pushed to `main`. All Go and Playwright tests pass. The real workbooks were imported in a local check (254 expenses, 8 flagged rows); they are not stored in the repository. Next: Devon deploys the stack with Dockhand, imports both workbooks, reviews the To-do panel, and records the past settle-up payments.
+Version 1.1.0 (personal expenses, split P) built and pushed to `main`. All Go and Playwright tests pass. Version 1.0.0 was the first release. The real workbooks were imported in a local check (254 expenses, 8 flagged rows); they are not stored in the repository. Next: Devon deploys the stack with Dockhand, imports both workbooks, reviews the To-do panel, and records the past settle-up payments.

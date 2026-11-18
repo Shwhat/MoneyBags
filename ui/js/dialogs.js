@@ -42,7 +42,7 @@ document.addEventListener('mouseup', () => { if ($('#dlg') && $('#dlg').open && 
 
 const personOpts = () => B.people.map(p => [p.id, p.name]);
 const catOpts = (blank = 'No category') => [['', blank]].concat(B.categories.map(c => [c.id, c.name]));
-const splitOpts = () => [['Y', 'Y: joint, split 50/50'], ['N', 'N: paid for the other person'], ['', 'Not set yet']];
+const splitOpts = () => [['Y', 'Y: joint, split 50/50'], ['N', 'N: paid for the other person'], ['P', 'P: personal, nobody owes'], ['', 'Not set yet']];
 
 // ---------- first run ----------
 function setupDlg(force) {

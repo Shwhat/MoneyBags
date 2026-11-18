@@ -6,11 +6,12 @@ This page lists what MoneyBags does in the current version, followed by what is 
 
 ### Expenses
 
-- Record an expense with date, vendor, category, who paid, joint or not (Y or N), amount, cash back, amount saved and notes.
+- Record an expense with date, vendor, category, who paid, split (Y joint, N for the other person, or P personal), amount, cash back, amount saved and notes.
+- Track personal expenses (P): the payer keeps the whole cost, it counts in their spending, and it never changes the balance.
 - Type expenses one after another in the entry row at the top of the list; Enter adds each one.
 - Suggest vendors already used, and bring a known vendor's last category along.
 - Show each expense's final total and each person's share.
-- Sort by any column, search by text, and filter by category, who paid, joint or not, and needs review.
+- Sort by any column, search by text, and filter by category, who paid, split, and needs review.
 - Select one or many rows with the mouse or keyboard; duplicate, delete or change them together.
 - Mark an expense as needs review with a reason, and mark it reviewed again.
 
@@ -29,7 +30,7 @@ This page lists what MoneyBags does in the current version, followed by what is 
 
 ### Summary and charts
 
-- Show a month-by-month table for each year with joint spending, who paid it, what each person paid for the other, each person's share, settle-up entries, the net for the month and the running balance.
+- Show a month-by-month table for each year with joint spending, who paid it, what each person paid for the other, each person's personal spending, each person's share, settle-up entries, the net for the month and the running balance.
 - Show totals by category with each person's share.
 - Chart each person's share by month, spending by category and the balance at the end of each month, with a tooltip on every point and bar.
 

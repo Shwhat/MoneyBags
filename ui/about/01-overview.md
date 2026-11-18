@@ -4,7 +4,7 @@ MoneyBags is a shared expense tracker for two people who split household costs. 
 
 | Area | What it holds |
 |---|---|
-| **Expenses** | Every purchase: vendor, amount, date, who paid, whether it is joint, category, cash back and notes |
+| **Expenses** | Every purchase: vendor, amount, date, who paid, how it is split (joint, for the other person, or personal), category, cash back and notes |
 | **Payments** | Settle-up entries between the two people: payments, credits and adjustments |
 | **Recurring bills** | Monthly bills that add themselves, such as power, water and internet |
 | **Summary** | The month-by-month table: joint spending, who paid it, shares, settle-up entries and the balance |
@@ -16,7 +16,7 @@ Expenses and payments together make the balance. Recurring bills add expenses. T
 
 1. **One shared book.** Both people work in the same book on the server. One person edits at a time; the other sees the book read-only until the first is done.
 2. **Every change is saved.** Changes save a moment after they are made. The server also keeps a copy of the book for each day it is saved.
-3. **The same math as the spreadsheet.** A joint expense is split in half. An expense paid for the other person is owed back in full.
+3. **The same math as the spreadsheet.** A joint expense is split in half. An expense paid for the other person is owed back in full. A personal expense is the payer's own and nobody owes anything.
 4. **Nothing depends on the internet.** The program, its fonts, scripts and this guide are bundled with it.
 5. **Data in a readable format.** The book is a JSON file, and every list can be exported to CSV or Excel.
 6. **Every change can be undone.** Undo and redo cover every change made since the page was opened.

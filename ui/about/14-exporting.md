@@ -12,7 +12,7 @@ MoneyBags saves CSV and Excel files to the browser's download folder. Every expo
 | Vendor | Text |
 | Category | Name |
 | Paid by | Name |
-| Joint (Y/N) | Y, N or blank |
+| Split (Y/N/P) | Y, N, P or blank |
 | Amount | Number, blank when blank |
 | Cash back | Number or blank |
 | Amount saved | Number or blank |
@@ -48,7 +48,7 @@ File name: moneybags-expenses-all.csv, or moneybags-expenses-YYYY-MM.csv or mone
 | Expenses | Every expense, with the same columns as the CSV |
 | Payments | Every settle-up entry, with the same columns as the CSV |
 | Summary YYYY | One sheet per year, oldest first: the month-by-month table from the Summary view, a total row, and the balance carried in |
-| Recurring bills | Bill, Amount, Paid by, Joint (Y/N), Category, Day, First month, Last month, Active, Notes |
+| Recurring bills | Bill, Amount, Paid by, Split (Y/N/P), Category, Day, First month, Last month, Active, Notes |
 | Categories | Category, number of expenses, total |
 
 ## CSV format

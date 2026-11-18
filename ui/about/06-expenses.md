@@ -10,7 +10,7 @@ An expense is one purchase or bill. This page covers its fields and every way to
 | Vendor | Text | Vendor or amount | Blank | Where the money went; vendors used before are suggested as you type |
 | Category | List | No | Blank, or the vendor's last category | See [Categories](/about/categories) |
 | Paid by | One of the two people | Yes, for the balance | The signed-in person (see [Settings](/about/settings)) | |
-| Split | Y or N | Yes, for the balance | Y | Y: joint, split 50/50. N: paid for the other person. See [Splitting and balances](/about/splitting-and-balances) |
+| Split | Y, N or P | Yes, for the balance | Y | Y: joint, split 50/50. N: paid for the other person. P: personal, the payer keeps the cost and nobody owes anything. See [Splitting and balances](/about/splitting-and-balances) |
 | Amount | Money | Vendor or amount | Blank | A blank amount counts as $0.00 and is listed in the To-do panel |
 | Cash back | Money | No | Blank | Money back from the credit card; it comes off the amount |
 | Amount saved | Money | No | Blank | A note of money saved (for example a discount); it does not change any total |
@@ -34,7 +34,7 @@ The Expenses view lists the expenses in the period on screen.
 | Vendor | The vendor; **Bill** when a recurring bill added it; **Review** when it needs a look (point at it for the reasons) |
 | Category | The category name |
 | Paid by | Who paid |
-| Split | **Y** (blue), **N** (orange) or **?** when not set |
+| Split | **Y** (blue), **N** (orange), **P** (grey with a border) or **?** when not set |
 | Amount | The amount, or **Blank** |
 | Cash back | Money back from the card |
 | Final | Amount minus cash back |
@@ -87,7 +87,7 @@ Select expenses and press **Ctrl+D** (or **Duplicate**). The copies have the sam
 | Search box (Ctrl+F) | Shows expenses whose vendor, notes, category, payer or amount contains the text; Escape clears it |
 | All categories | One category, or **No category** |
 | Anyone paid | Only expenses paid by one person |
-| Joint and not joint | Joint (Y), For the other person (N), or Split not set |
+| Every split | Joint (Y), For the other person (N), Personal (P), or Split not set |
 | Needs review only | Only expenses with something to check |
 | Clear filters | Clears the search and every filter |
 

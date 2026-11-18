@@ -21,7 +21,7 @@ sudo chown -R 65532:65532 /opt/moneybags/data
 sudo ss -ltnp | grep ':8417 '
 ```
 
-No output from the last command means port 8417 is free. In Dockhand, add a Git stack with the repository https://github.com/Shwhat/MoneyBags and the compose path docker-compose.yml, enter any variables to change from the table below, and deploy. Check the stack's logs for "MoneyBags 1.0.0 listening on :8080". Then, on the Docker host:
+No output from the last command means port 8417 is free. In Dockhand, add a Git stack with the repository https://github.com/Shwhat/MoneyBags and the compose path docker-compose.yml, enter any variables to change from the table below, and deploy. Check the stack's logs for "MoneyBags 1.1.0 listening on :8080". Then, on the Docker host:
 
 ```
 curl -I http://127.0.0.1:8417/login

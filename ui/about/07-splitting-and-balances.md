@@ -12,6 +12,7 @@ Final total = Amount - Cash back. Every share and balance uses the final total.
 |---|---|---|---|
 | Y | Joint: both people share it | Half each | The other person owes the payer half |
 | N | Paid for the other person | All of it is the other person's | The other person owes the payer all of it |
+| P | Personal: the payer's own | All of it is the payer's | Nothing; nobody owes anything |
 | Not set | Not decided yet | All of it counts for the payer | Nothing, until the split is set |
 
 An expense also adds nothing to the balance while it has no date or no payer. Such expenses are listed in the To-do panel.
@@ -24,7 +25,7 @@ Each expense's effect on the balance is rounded to whole cents, so a balance can
 
 The balance is everything owed between the two people, added up from the first entry in the book:
 
-- every expense with a date, a payer and a split, as in the table above
+- every expense with a date, a payer and a Y or N split, as in the table above (personal expenses add nothing)
 - minus every settle-up entry; see [Settle-up payments](/about/settle-up-payments)
 
 It is shown as one sentence, such as "Alex owes Devon $728.29", or "All square" when it is under half a cent.
@@ -48,6 +49,8 @@ October 2025 from the old spreadsheet:
 
 Net for October: $1,020.57 - $292.28 = $728.29, so Alex owes Devon $728.29.
 
+A personal expense changes nothing in this example: if Devon also paid $45.00 for a haircut marked P, Devon's share grows by $45.00 and the balance stays the same.
+
 Adding a month where Alex paid Devon's $280.00 insurance (split N) and Devon paid a $100.50 joint grocery bill with $0.50 cash back:
 
 - Insurance: Devon owes Alex $280.00.
@@ -64,6 +67,7 @@ The Balance panel and the Summary view show these for the period on screen:
 | Joint spending | Final totals of joint (Y) expenses |
 | (person) paid (joint) | Final totals of joint expenses that person paid |
 | (person) paid for (other) | Final totals of N expenses that person paid |
+| (person) personal | Final totals of P expenses that person paid |
 | (person)'s share | Sum of that person's shares |
 | Settle-up entries | Total of payments, credits and adjustments in the period, both directions |
 | Net for the period | The balance effect of the period's expenses and settle-up entries only |

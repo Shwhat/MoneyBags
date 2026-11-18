@@ -4,7 +4,7 @@
 // person 1, a negative net means person 1 owes person 2.
 const finalOf = e => r2((e.amount ?? 0) - (e.cashBack ?? 0));
 // what each person spent on an expense: joint expenses are split in half, "for the other person" expenses belong
-// entirely to the other person, and an expense with no split yet counts for the person who paid
+// entirely to the other person, and personal expenses (and an expense with no split yet) count for the person who paid
 function sharesOf(e) {
   const f = finalOf(e), p = e.paidBy, o = other(p), s = { p1: 0, p2: 0 };
   if (!person(p)) return s;
@@ -14,9 +14,10 @@ function sharesOf(e) {
   return s;
 }
 // how an expense moves the balance: the person who did not pay owes the payer their share, in whole cents (an odd
-// cent on a joint expense goes to the payer), so a balance can always be settled exactly
+// cent on a joint expense goes to the payer), so a balance can always be settled exactly. Personal expenses never
+// move the balance.
 function owedOf(e) {
-  if (!person(e.paidBy) || !e.split || !validDate(e.date)) return 0;
+  if (!person(e.paidBy) || (e.split !== 'Y' && e.split !== 'N') || !validDate(e.date)) return 0;
   const f = finalOf(e), amt = r2(e.split === 'Y' ? f / 2 : f);
   return e.paidBy === 'p1' ? amt : -amt;
 }
@@ -41,12 +42,13 @@ function problemsOf(e) {
 
 // stats for any set of expenses and payments
 function statsOf(exps, pays) {
-  const s = { count: exps.length, total: 0, joint: 0, jointBy: { p1: 0, p2: 0 }, forOther: { p1: 0, p2: 0 }, paidBy: { p1: 0, p2: 0 }, share: { p1: 0, p2: 0 }, unsplit: 0, owed: 0, payments: 0, paysFrom: { p1: 0, p2: 0 }, cats: {} };
+  const s = { count: exps.length, total: 0, joint: 0, jointBy: { p1: 0, p2: 0 }, forOther: { p1: 0, p2: 0 }, personal: { p1: 0, p2: 0 }, paidBy: { p1: 0, p2: 0 }, share: { p1: 0, p2: 0 }, unsplit: 0, owed: 0, payments: 0, paysFrom: { p1: 0, p2: 0 }, cats: {} };
   for (const e of exps) {
     const f = finalOf(e), sh = sharesOf(e);
     s.total += f; if (person(e.paidBy)) s.paidBy[e.paidBy] += f;
     if (e.split === 'Y') { s.joint += f; if (person(e.paidBy)) s.jointBy[e.paidBy] += f; }
     else if (e.split === 'N') { if (person(e.paidBy)) s.forOther[e.paidBy] += f; }
+    else if (e.split === 'P') { if (person(e.paidBy)) s.personal[e.paidBy] += f; }
     else s.unsplit += f;
     s.share.p1 += sh.p1; s.share.p2 += sh.p2;
     s.owed += owedOf(e);

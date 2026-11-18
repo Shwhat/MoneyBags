@@ -6,7 +6,8 @@
 | Expense | One purchase or bill |
 | Joint (Y) | An expense both people share, split in half |
 | For the other person (N) | An expense one person paid entirely for the other |
-| Split | Whether an expense is joint (Y) or for the other person (N) |
+| Personal (P) | An expense that belongs to the person who paid; nobody owes anything |
+| Split | Whether an expense is joint (Y), for the other person (N) or personal (P) |
 | Final total | Amount minus cash back |
 | Cash back | Money back from the credit card on an expense |
 | Amount saved | A note of money saved on an expense; it changes no total |

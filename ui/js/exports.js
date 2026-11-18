@@ -5,7 +5,7 @@ const num2 = v => v == null ? '' : r2(v);
 const stamp = () => today();
 function expenseColumns() {
   const [a, b] = B.people;
-  return [['Date', e => e.date], ['Vendor', e => e.vendor], ['Category', e => catName(e.category)], ['Paid by', e => pname(e.paidBy) === '?' ? '' : pname(e.paidBy)], ['Joint (Y/N)', e => e.split], ['Amount', e => num2(e.amount)], ['Cash back', e => num2(e.cashBack)], ['Amount saved', e => num2(e.saved)], ['Final total', e => r2(finalOf(e))], [a.name + "'s share", e => r2(sharesOf(e).p1)], [b.name + "'s share", e => r2(sharesOf(e).p2)], ['Notes', e => e.notes], ['Needs review', e => problemsOf(e).map(p => p.text).join('. ')], ['Recurring bill', e => { const t = e.recurring && findRecurring(e.recurring); return t ? t.name : ''; }], ['Added', e => e.added || ''], ['Added by', e => e.addedBy || '']];
+  return [['Date', e => e.date], ['Vendor', e => e.vendor], ['Category', e => catName(e.category)], ['Paid by', e => pname(e.paidBy) === '?' ? '' : pname(e.paidBy)], ['Split (Y/N/P)', e => e.split], ['Amount', e => num2(e.amount)], ['Cash back', e => num2(e.cashBack)], ['Amount saved', e => num2(e.saved)], ['Final total', e => r2(finalOf(e))], [a.name + "'s share", e => r2(sharesOf(e).p1)], [b.name + "'s share", e => r2(sharesOf(e).p2)], ['Notes', e => e.notes], ['Needs review', e => problemsOf(e).map(p => p.text).join('. ')], ['Recurring bill', e => { const t = e.recurring && findRecurring(e.recurring); return t ? t.name : ''; }], ['Added', e => e.added || ''], ['Added by', e => e.addedBy || '']];
 }
 const PAY_COLS = () => [['Date', p => p.date], ['From', p => pname(p.from)], ['To', p => pname(p.to)], ['Amount', p => r2(p.amount)], ['Kind', p => PAYMENT_KINDS[p.kind]], ['Notes', p => p.notes]];
 const sortByDate = l => [...l].sort((x, y) => natCmp(x.date || '9999', y.date || '9999'));
@@ -24,17 +24,17 @@ function exportPaymentsCSV() {
 }
 function summaryRows(year) {
   const [a, b] = B.people, T = yearTable(year), net = v => Math.abs(v) < 0.005 ? 'All square' : netText(v);
-  const head = ['Month', 'Joint spending', a.name + ' paid (joint)', b.name + ' paid (joint)', `${a.name} paid for ${b.name}`, `${b.name} paid for ${a.name}`, a.name + "'s share", b.name + "'s share", 'Settle-up', 'Net for the month', 'Balance at month end'];
-  const row = (l, s, end) => [l, r2(s.joint), r2(s.jointBy.p1), r2(s.jointBy.p2), r2(s.forOther.p1), r2(s.forOther.p2), r2(s.share.p1), r2(s.share.p2), r2(s.paysFrom.p1 + s.paysFrom.p2), net(s.net), net(end)];
-  return [head].concat(T.rows.map(r => row(r.label, r.s, r.end)), [row(String(year), T.total, T.end)], [[], ['Carried in from ' + (year - 1), '', '', '', '', '', '', '', '', '', net(T.start)]]);
+  const head = ['Month', 'Joint spending', a.name + ' paid (joint)', b.name + ' paid (joint)', `${a.name} paid for ${b.name}`, `${b.name} paid for ${a.name}`, a.name + ' personal', b.name + ' personal', a.name + "'s share", b.name + "'s share", 'Settle-up', 'Net for the month', 'Balance at month end'];
+  const row = (l, s, end) => [l, r2(s.joint), r2(s.jointBy.p1), r2(s.jointBy.p2), r2(s.forOther.p1), r2(s.forOther.p2), r2(s.personal.p1), r2(s.personal.p2), r2(s.share.p1), r2(s.share.p2), r2(s.paysFrom.p1 + s.paysFrom.p2), net(s.net), net(end)];
+  return [head].concat(T.rows.map(r => row(r.label, r.s, r.end)), [row(String(year), T.total, T.end)], [[], ['Carried in from ' + (year - 1), '', '', '', '', '', '', '', '', '', '', '', net(T.start)]]);
 }
 function exportExcel() {
   const ec = expenseColumns(), pc = PAY_COLS();
   const sheets = [
     { name: 'Expenses', rows: [ec.map(x => x[0])].concat(sortByDate(B.expenses).map(e => ec.map(x => x[1](e)))), widths: [11, 30, 14, 10, 10, 11, 10, 12, 11, 12, 12, 30, 30, 18, 11, 14] },
     { name: 'Payments', rows: [pc.map(x => x[0])].concat(sortByDate(B.payments).map(p => pc.map(x => x[1](p)))), widths: [11, 12, 12, 11, 12, 30] },
-    ...bookYears().slice().reverse().map(y => ({ name: 'Summary ' + y, rows: summaryRows(y), widths: [12, 14, 16, 16, 18, 18, 14, 14, 11, 24, 24] })),
-    { name: 'Recurring bills', rows: [['Bill', 'Amount', 'Paid by', 'Joint (Y/N)', 'Category', 'Day', 'First month', 'Last month', 'Active', 'Notes']].concat(B.recurring.map(t => [t.name, num2(t.amount), pname(t.paidBy), t.split, catName(t.category), t.day, t.start, t.end, t.active ? 'Yes' : 'No', t.notes])), widths: [24, 10, 10, 10, 14, 6, 11, 11, 7, 30] },
+    ...bookYears().slice().reverse().map(y => ({ name: 'Summary ' + y, rows: summaryRows(y), widths: [12, 14, 16, 16, 18, 18, 14, 14, 14, 14, 11, 24, 24] })),
+    { name: 'Recurring bills', rows: [['Bill', 'Amount', 'Paid by', 'Split (Y/N/P)', 'Category', 'Day', 'First month', 'Last month', 'Active', 'Notes']].concat(B.recurring.map(t => [t.name, num2(t.amount), pname(t.paidBy), t.split, catName(t.category), t.day, t.start, t.end, t.active ? 'Yes' : 'No', t.notes])), widths: [24, 10, 10, 10, 14, 6, 11, 11, 7, 30] },
     { name: 'Categories', rows: [['Category', 'Expenses', 'Total']].concat(B.categories.map(c => { const l = B.expenses.filter(e => e.category === c.id); return [c.name, l.length, r2(l.reduce((s, e) => s + finalOf(e), 0))]; })), widths: [18, 10, 12] },
   ];
   const name = `moneybags-${stamp()}.xlsx`;

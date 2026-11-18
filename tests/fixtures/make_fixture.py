@@ -23,6 +23,7 @@ rows = [
     ('Power Dec 2099', None, D(2099, 12, 1), 'D', 'Y', None, None),
     ('Water Dec 2099', 100.0, D(2099, 12, 1), 'A', 'Y', None, None),
     ('Unknown payer', 10.0, D(2025, 11, 9), 'Z', 'Y', None, None),
+    ('Haircut', 30.0, D(2025, 11, 6), 'A', 'P', None, None),
 ]
 for i, r in enumerate(rows, start=3):
     v, a, d, w, j, s, c = r

@@ -240,6 +240,7 @@ table.grid tr.monthrow td{background:var(--panel);color:var(--muted);font-size:1
 .pill.y{background:#dbe9fb;color:#174a92}
 .pill.n{background:#fbe3d6;color:#8a3b12}
 .pill.rec{background:#e3f1e6;color:#1e5a2a}
+.pill.p{background:#e3e7ee;color:#3c4552;border:1px solid #c9ced6}
 .owe{font-weight:600}
 .pos{color:var(--accent)}
 
@@ -327,6 +328,7 @@ table.pv td.num{text-align:right;font-variant-numeric:tabular-nums}
 :root[data-theme=dark] .pill.y{background:#25395a;color:#cfe0ff}
 :root[data-theme=dark] .pill.n{background:#4a2c1d;color:#f5c6ad}
 :root[data-theme=dark] .pill.rec{background:#1f3a26;color:#b5e2bf}
+:root[data-theme=dark] .pill.p{background:#323a45;color:#d6dbe2;border-color:#46505c}
 :root[data-theme=dark] .flag,:root[data-theme=dark] .banner{background:#4a3712;color:#f5d48f;border-color:#6b5420}
 :root[data-theme=dark] .phbtn:hover:not(:disabled){background:#2c333d;border-color:var(--line)}
 :root[data-theme=dark] .seg button.on{background:#25395a;color:#cfe0ff}

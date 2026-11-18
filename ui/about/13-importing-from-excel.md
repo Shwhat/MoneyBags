@@ -12,7 +12,7 @@ Only the **Expenses** sheet is read (or the first sheet when there is none by th
 | Amount | Amount | A number; blank stays blank; text that is not a number is left blank and flagged |
 | Date | Date | Excel dates and typed dates (11/3/2026, 2026-11-03, Nov 3, 2026) are read; anything else is left blank and flagged with what the cell held |
 | Who Paid | Paid by | Matched to a person's letter (set in Book settings), full name or first name, ignoring case; no match leaves Paid by unset |
-| Joint Expense (Y/N/H) | Split | Y or y: Y. N or n: N. H: Y, flagged as "Marked H (house)". Blank: not set |
+| Joint Expense (Y/N/H) | Split | Y or y: Y. N or n: N. P or p: P (personal). H: Y, flagged as "Marked H (house)". Blank: not set, and flagged for review |
 | Amount Saved | Amount saved | A number; zero is left blank |
 | Money Back from Credit Card | Cash back | A number; zero is left blank |
 

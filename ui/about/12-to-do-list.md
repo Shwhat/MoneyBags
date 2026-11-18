@@ -8,7 +8,7 @@ The To-do panel lists every expense that needs a look, in date order, across all
 |---|---|---|
 | Amount is blank | The amount is empty, for example a recurring bill with no fixed amount | Enter the amount |
 | Date is missing | No date, for example a date the spreadsheet could not read | Enter the date |
-| Joint or not is not set | The split is empty | Choose Y or N |
+| Joint or not is not set | The split is empty | Choose Y, N or P |
 | Who paid is not set | No payer, for example an unknown letter in the spreadsheet | Choose who paid |
 | (a reason) | Someone marked the expense as needs review, or the import flagged it | Mark reviewed, or **Done** in the panel |
 

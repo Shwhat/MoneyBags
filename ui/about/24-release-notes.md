@@ -2,6 +2,15 @@
 
 The installed version is shown at the top of this guide.
 
+## 1.1.0 (2026-11-17): Personal expenses
+
+- Personal split (P): an expense the payer keeps. It counts in the payer's spending, category totals and charts, and never changes the balance.
+- P is offered in the entry row, the Properties panel, Change selected, recurring bills and the split filter, and shows as a grey P in the list.
+- Summary: Personal tile, and a personal column for each person in the month-by-month table and the Excel export.
+- Balance panel: each person's personal spending for the period.
+- Import: P in the Joint Expense column imports as personal.
+- Exports: the Joint (Y/N) column is now Split (Y/N/P).
+
 ## 1.0.0 (2026-11-17): First release
 
 - Shared expense book for two people, with accounts, sign-in and one editor at a time.

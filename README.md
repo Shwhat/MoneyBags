@@ -2,11 +2,12 @@
 
 A shared expense tracker for two people. MoneyBags records what each person paid, works out who owes whom with the same rules as the old Monthly Expenses spreadsheet, and keeps a running balance that both people see. It runs as one small Docker container on a home server.
 
-Version 1.0.0. The full user guide is built into the program (Help > About MoneyBags, or F1) and lives in `ui/about/`.
+Version 1.1.0. The full user guide is built into the program (Help > About MoneyBags, or F1) and lives in `ui/about/`.
 
 ## Features
 
-- Expenses with date, vendor, category, who paid, joint (Y) or paid for the other person (N), amount, cash back, amount saved and notes
+- Expenses with date, vendor, category, who paid, split (Y joint, N paid for the other person, P personal), amount, cash back, amount saved and notes
+- Personal expenses (P): the payer keeps the cost, it counts in their spending and never changes the balance
 - Entry row for typing receipts one after another; vendor suggestions and category recall
 - Balance today, per month and per year; each person's share
 - Settle-up payments, credits and adjustments
@@ -35,7 +36,7 @@ In Dockhand:
 
 1. Add a Git stack: repository `https://github.com/Shwhat/MoneyBags`, compose path `docker-compose.yml`.
 2. Enter any variables you want to change from `.env.example` (for example `MONEYBAGS_PORT` if 8417 is taken).
-3. Deploy, then check the stack's logs for `MoneyBags 1.0.0 listening on :8080`.
+3. Deploy, then check the stack's logs for `MoneyBags 1.1.0 listening on :8080`.
 
 Back on the Docker host, confirm it answers before adding the Cloudflare Tunnel route:
 
